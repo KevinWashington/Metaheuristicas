@@ -1,18 +1,19 @@
 // Aluno: Kevin Washington Azevedo da Cruz
+//        Jefferson Matheus Ferreira de Lima
 /**
- * Knapsack Problem Implementation using Genetic Algorithm
+ * Problema da Mochila (Knapsack) usando Algoritmo Genético
  *
- * Problem:
- * - 100 items with values and weights
- * - Knapsack capacity of 1550
- * - Goal: Maximize total value while keeping total weight under capacity
+ * Problema:
+ * - 100 itens com valores e pesos
+ * - Capacidade da mochila: 1550
+ * - Objetivo: Maximizar o valor total mantendo o peso total abaixo da capacidade
  *
- * Genetic Algorithm Parameters:
- * - Population size: 100
- * - Number of generations: 200 (total evaluations: 20,000)
- * - Crossover rate: 0.8
- * - Mutation rate: 0.1
- * - Selection: Tournament selection
+ * Parâmetros do Algoritmo Genético:
+ * - Tamanho da população: 100
+ * - Número de gerações: 200 (total de avaliações: 20.000)
+ * - Taxa de crossover: 0,8
+ * - Taxa de mutação: 0,1
+ * - Seleção: Seleção por torneio
  */
 
 function parseKnapsackInstance(filePath) {
@@ -180,13 +181,13 @@ class GeneticAlgorithm {
       population = newPopulation;
 
       // Log progress
-      if ((generation + 1) % 20 === 0) {
-        console.log(
-          `Generation ${generation + 1}, Best Fitness: ${
-            this.bestFitness
-          }, Evaluations: ${this.evaluationCount}`
-        );
-      }
+      // if ((generation + 1) % 20 === 0) {
+      //   console.log(
+      //     `Generation ${generation + 1}, Best Fitness: ${
+      //       this.bestFitness
+      //     }, Evaluations: ${this.evaluationCount}`
+      //   );
+      // }
     }
 
     return {
@@ -221,7 +222,7 @@ function runExperiment(numRuns = 20) {
   const results = [];
 
   for (let run = 1; run <= numRuns; run++) {
-    console.log(`Run ${run}/${numRuns}`);
+    // console.log(`Run ${run}/${numRuns}`);
 
     const ga = new GeneticAlgorithm(items, capacity);
     const result = ga.evolve();
@@ -235,9 +236,9 @@ function runExperiment(numRuns = 20) {
       selectedItems: analysis.selectedItems,
     });
 
-    console.log(
-      `Run ${run} completed with fitness: ${result.fitness}, value: ${analysis.totalValue}, weight: ${analysis.totalWeight}`
-    );
+    // console.log(
+    //   `Run ${run} completed with fitness: ${result.fitness}, value: ${analysis.totalValue}, weight: ${analysis.totalWeight}`
+    // );
   }
 
   const fitnessValues = results.map((r) => r.fitness);
@@ -249,20 +250,20 @@ function runExperiment(numRuns = 20) {
   const best = Math.max(...fitnessValues);
   const worst = Math.min(...fitnessValues);
 
-  console.log("\n===== EXPERIMENT RESULTS =====");
-  console.log(`Runs: ${numRuns}`);
-  console.log(`Mean Fitness: ${mean}`);
-  console.log(`Standard Deviation: ${stdDev}`);
-  console.log(`Best Fitness: ${best}`);
-  console.log(`Worst Fitness: ${worst}`);
+  console.log("\n===== RESULTADOS DO EXPERIMENTO =====");
+  console.log(`Execuções: ${numRuns}`);
+  console.log(`Média: ${mean}`);
+  console.log(`Desvio Padrão: ${stdDev}`);
+  console.log(`Melhor Fitness: ${best}`);
+  console.log(`Pior Fitness: ${worst}`);
 
   const bestRun = results.find((r) => r.fitness === best);
-  console.log("\n===== BEST SOLUTION =====");
+  console.log("\n===== MELHOR SOLUÇÃO =====");
   console.log(`Run: ${bestRun.run}`);
-  console.log(`Total Value: ${bestRun.totalValue}`);
-  console.log(`Total Weight: ${bestRun.totalWeight}`);
+  console.log(`Valor total: ${bestRun.totalValue}`);
+  console.log(`Peso total: ${bestRun.totalWeight}`);
   console.log(
-    `Selected Items Indexes: ${bestRun.selectedItems
+    `Índices de itens selecionados: ${bestRun.selectedItems
       .map((item) => item.index)
       .join(", ")}`
   );
@@ -279,4 +280,3 @@ function runExperiment(numRuns = 20) {
 }
 
 const experiment = runExperiment(20);
-console.log(JSON.stringify(experiment.statistics, null, 2));
